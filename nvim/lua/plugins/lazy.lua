@@ -159,7 +159,9 @@ require('lazy').setup({
         },
 
         -- Debugger
-        { "mfussenegger/nvim-dap" },
+        { "mfussenegger/nvim-dap",
+        config = function() end, -- This is an empty function to avoid errors
+        },
         { "/HiPhish/debugpy.nvim" }, -- python debugger
         { "rcarriga/nvim-dap-ui", -- Debug UI
         dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "/folke/neodev.nvim"},
@@ -175,9 +177,7 @@ require('lazy').setup({
                         toggle = "t",
                     },
                 }
-                require("neodev").setup{
-                    library = { plugins = { "nvim-dap-ui" }, types = true },
-                }
+                require("neodev").setup{ library = { plugins = { "nvim-dap-ui" }, types = true }, }
             end,
         },
         -- icons
@@ -206,7 +206,18 @@ require('lazy').setup({
                     pythonPath = '/usr/bin/python3';
                     cwd = "/"
 
-                }
+                },
+                {
+                    type = 'python',
+                    request = 'launch',
+                    name = "Launch file with arguments",
+                    program = "${file}",
+                    args = function()
+                        local args_string = vim.fn.input('Enter arguments (separated by spaces): ')
+                        return vim.split(args_string, " +")
+                    end,
+                    pythonPath ='/usr/bin/python3'
+                },
             }
         end,
     },
@@ -340,6 +351,13 @@ require('lazy').setup({
         {
             "folke/noice.nvim",
             event = "VeryLazy",
+			presets = {
+				bottom_search = true, -- use a classic bottom cmdline for search
+				command_palette = true, -- position the cmdline and popupmenu together
+				long_message_to_split = true, -- long messages will be sent to a split
+				inc_rename = false, -- enables an input dialog for inc-rename.nvim
+				lsp_doc_border = false, -- add a border to hover docs and signature help
+			},
             opts = {
                 -- add any options here
             },
@@ -362,15 +380,121 @@ require('lazy').setup({
             lazy = false,
         },
 
+        -- dashboard
         {
             'nvimdev/dashboard-nvim',
             event = 'VimEnter',
             config = function()
                 require('dashboard').setup {
-                    -- config
+                    config = {
+                        week_header = {
+                            enable = true,
+                        },
+                        shortcut = {
+                            { desc = '󰊳 Update', group = '@property', action = 'Lazy update', key = 'u' },
+                            {
+                                icon = ' ',
+                                icon_hl = '@variable',
+                                desc = 'Files',
+                                group = 'Label',
+                                action = 'Telescope find_files',
+                                key = 'f',
+                            },
+                            {
+                                desc = ' Obsidian Daily Note',
+                                group = 'DiagnosticHint',
+                                action = 'ObsidianToday',
+                                key = 'a',
+                            },
+                            {
+                                desc = ' AI Chat',
+                                group = 'Number',
+                                action = 'Gen Chat',
+                                key = 'd',
+                            },
+                        },
+                        shortcut_type = { 'number'
+					},
+						hide = {
+							tabline= true, -- hide statusline from dashboard
+						},
+                    },
                 }
             end,
             dependencies = { {'nvim-tree/nvim-web-devicons'}}
-        }
+        },
 
-       }})
+        { 'sbdchd/neoformat',
+          config = function()
+              -- require('neoformat').setup {
+                  -- config
+              --  }
+          end,
+    },
+
+    -- tab lines
+    { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {},
+    config = function()
+        require("ibl").setup({
+			exclude = { 
+				filetypes = {"dashboard"},
+		},
+	})
+    end,
+},
+
+-- Fugitive git handler
+	{ "tpope/vim-fugitive",
+	},
+
+	-- Gitsigns
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+
+		end,
+	},
+
+	-- Web tools
+	{
+		"/ray-x/web-tools.nvim",
+		config = function()
+			require('web-tools').setup()
+		end,
+	},
+
+	-- .ipynb reader
+	{ "GCBallesteros/jupytext.nvim", -- Open .ipynb files
+	config = function()
+		require('jupytext').setup()
+	end,
+},
+	{ "GCBallesteros/NotebookNavigator.nvim",
+	keys = {
+		{ "]h", function() require("notebook-navigator").move_cell "d" end },
+		{ "[h", function() require("notebook-navigator").move_cell "u" end },
+		{ "<leader>X", "<cmd>lua require('notebook-navigator').run_cell()<cr>" },
+		{ "<leader>x", "<cmd>lua require('notebook-navigator').run_and_move()<cr>" },
+	},
+	dependencies = {
+		"echasnovski/mini.comment",
+		"hkupty/iron.nvim", -- repl provider
+		-- "akinsho/toggleterm.nvim", -- alternative repl provider
+		-- "benlubas/molten-nvim", -- alternative repl provider
+		"anuvyklack/hydra.nvim",
+	},
+	event = "VeryLazy",
+	config = function()
+		local nn = require "notebook-navigator"
+		nn.setup({ activate_hydra_keys = "<leader>h" })
+	end, 
+},
+
+	{ "/Vigemus/iron.nvim",
+		config = function()
+			-- require('iron').setup()
+		end,
+},
+
+}})

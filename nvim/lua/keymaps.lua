@@ -6,4 +6,3 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 -- yank to clipboard
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-
