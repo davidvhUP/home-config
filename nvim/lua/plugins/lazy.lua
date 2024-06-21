@@ -89,6 +89,26 @@ require('lazy').setup({
                 })
             end
         },
+		{ "windwp/nvim-ts-autotag", 
+		config = function()
+			require('nvim-ts-autotag').setup({
+				opts = {
+					-- Defaults
+					enable_close = true, -- Auto close tags
+					enable_rename = true, -- Auto rename pairs of tags
+					enable_close_on_slash = false -- Auto close on trailing </
+				},
+				-- Also override individual filetype configs, these take priority.
+				-- Empty by default, useful if one of the "opts" global settings
+				-- doesn't work well in a specific filetype
+				-- per_filetype = {
+				-- 	["html"] = {
+				-- 		enable_close = true
+				-- 	}
+				-- }
+			})
+		end,
+	},
         {
             "/hrsh7th/cmp-cmdline",
             config = function()
@@ -339,7 +359,7 @@ require('lazy').setup({
             run = ":TSUpdate",
             config = function()
                 require("nvim-treesitter.configs").setup({
-                    ensure_installed = { "markdown", "markdown_inline", "lua", "python", "r", "rnoweb" },
+                    ensure_installed = { "markdown", "markdown_inline", "lua", "python", "r", "rnoweb", "html" },
                     highlight = {
                         enable = true,
                     },
@@ -350,6 +370,17 @@ require('lazy').setup({
         -- Noice (command popup)
         {
             "folke/noice.nvim",
+			routes = {
+				{
+					filter = {
+						-- Example filter, replace with actual criteria for Git messages
+						event = "msg_show"
+					},
+
+				view = "split"
+				},
+					-- add any options here
+			},
             event = "VeryLazy",
 			presets = {
 				bottom_search = true, -- use a classic bottom cmdline for search
@@ -359,8 +390,7 @@ require('lazy').setup({
 				lsp_doc_border = false, -- add a border to hover docs and signature help
 			},
             opts = {
-                -- add any options here
-            },
+			},
             dependencies = {
                 -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
                 "MunifTanjim/nui.nvim",

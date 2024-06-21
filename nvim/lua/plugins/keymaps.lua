@@ -23,6 +23,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>gr', ':Gen Review_Code<CR>')
 -- obsidian
 vim.keymap.set({ 'n' }, '<leader>ot', ':ObsidianToday<CR>')
 vim.keymap.set({ 'n' }, '<leader>onc', ':ObsidianTemplate Coding notes.md<CR>')
+vim.keymap.set({ 'n' }, '<leader>on', ':ObsidianTemplate Default.md<CR>')
 
 -- Gitsigns
 vim.keymap.set("n", "<leader>gs", ":Gitsigns preview_hunk_inline<CR>", {})
@@ -30,3 +31,5 @@ vim.keymap.set("n", "<leader>gs", ":Gitsigns preview_hunk_inline<CR>", {})
 -- Dismiss Noice Messages
 vim.keymap.set("n", "<leader>nd", ":Noice dismiss<CR>", {desc = "Dismiss Noice Message"})
 
+-- Dashboard
+vim.keymap.set("n", "<leader>d", ":Dashboard<CR>")
