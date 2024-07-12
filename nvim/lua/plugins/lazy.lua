@@ -75,11 +75,11 @@ require('lazy').setup({
                 cmp.setup({
                     formatting = lsp_zero.cmp_format({details = true}),
                     mapping = cmp.mapping.preset.insert({
-                        ['<C-Space>'] = cmp.mapping.complete(),
+                        ['<C-b>'] = cmp.mapping.complete(),
                         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                         ['<C-d>'] = cmp.mapping.scroll_docs(4),
                         ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-                        ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+                        -- ['<C-b>'] = cmp_action.luasnip_jump_backward(),
                     }),
                     snippet = {
                         expand = function(args)
@@ -110,7 +110,7 @@ require('lazy').setup({
 		end,
 	},
         {
-            "/hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-cmdline",
             config = function()
                 local lsp_zero = require('lsp-zero')
                 lsp_zero.extend_cmp()
@@ -182,9 +182,9 @@ require('lazy').setup({
         { "mfussenegger/nvim-dap",
         config = function() end, -- This is an empty function to avoid errors
         },
-        { "/HiPhish/debugpy.nvim" }, -- python debugger
+        { "HiPhish/debugpy.nvim" }, -- python debugger
         { "rcarriga/nvim-dap-ui", -- Debug UI
-        dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "/folke/neodev.nvim"},
+        dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", 
             config = function()
                 require("dapui").setup{
                     mappings = {
@@ -197,19 +197,18 @@ require('lazy').setup({
                         toggle = "t",
                     },
                 }
-                require("neodev").setup{ library = { plugins = { "nvim-dap-ui" }, types = true }, }
             end,
         },
         -- icons
-        { "/ChristianChiarulli/neovim-codicons" },
+        { "ChristianChiarulli/neovim-codicons" },
             config = function()
                 require("neovim-codicons").setup{
                 }
             end,
         -- Virtual text
-        { "/theHamsta/nvim-dap-virtual-text" },
+        { "theHamsta/nvim-dap-virtual-text" },
         -- Python DAP
-        { "/mfussenegger/nvim-dap-python",
+        { "mfussenegger/nvim-dap-python",
         ft = "python",
         dependencies = {
             "mfussenegger/nvim-dap",
@@ -259,7 +258,7 @@ require('lazy').setup({
         -- Visualise Marks
         {
 
-            "/chentoast/marks.nvim",
+            "chentoast/marks.nvim",
             config = function()
                 require("marks").setup()
             end
@@ -319,7 +318,7 @@ require('lazy').setup({
         -- obsidian.nvim
         {
             "epwalsh/obsidian.nvim",
-            version = "3.7.9",  -- recommended, use latest release instead of latest commit
+            version = "*",  -- recommended, use latest release instead of latest commit
             lazy = false,
             ft = "markdown",
             dependencies = {
@@ -333,7 +332,7 @@ require('lazy').setup({
                 workspaces = {
                     {
                         name = "Obsidian Vault",
-                        path = "/mnt/d/Google Drive/Obsidian Vault",
+                        path = "/mnt/d/My Drive (Personal)/Obsidian Vault",
                     },
                 },
                 daily_notes = {
@@ -355,7 +354,7 @@ require('lazy').setup({
         },
 
         -- treesitter
-        { "/nvim-treesitter/nvim-treesitter",
+        { "nvim-treesitter/nvim-treesitter",
             run = ":TSUpdate",
             config = function()
                 require("nvim-treesitter.configs").setup({
@@ -488,7 +487,7 @@ require('lazy').setup({
 
 	-- Web tools
 	{
-		"/ray-x/web-tools.nvim",
+		"ray-x/web-tools.nvim",
 		config = function()
 			require('web-tools').setup()
 		end,
@@ -521,10 +520,10 @@ require('lazy').setup({
 	end, 
 },
 
-	{ "/Vigemus/iron.nvim",
+	{ "Vigemus/iron.nvim",
 		config = function()
 			-- require('iron').setup()
 		end,
 },
 
-}})
+}}})

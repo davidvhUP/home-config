@@ -19,6 +19,7 @@ vim.keymap.set("n", "<leader>da", ":DapContinue<cr>")
 vim.keymap.set({ 'n', 'v' }, '<leader>g', ':Gen<CR>')
 vim.keymap.set({ 'n', 'v' }, '<leader>gc', ':Gen Chat<CR>')
 vim.keymap.set({ 'n', 'v' }, '<leader>gr', ':Gen Review_Code<CR>')
+vim.keymap.set({ 'n', 'v' }, '<leader>ge', ':Gen Enhance_Code<CR>')
 
 -- obsidian
 vim.keymap.set({ 'n' }, '<leader>ot', ':ObsidianToday<CR>')
